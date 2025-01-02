@@ -1,0 +1,15 @@
+{
+  "id": 25256,
+  "name": "Sang de Possédé",
+  "description": "Ce liquide dégageant une odeur âcre et fétide, parfois appelé « Diabolichor », semble être ce qui fait office de sang pour les Possédés.",
+  "type": {
+    "name": "Atoll des Possédés",
+    "id": 152
+  },
+  "level": 200,
+  "pods": 0,
+  "image_urls": {
+    "icon": "https://api.dofusdu.de/dofus3/v1/img/item/15089-64.png",
+    "sd": "https://api.dofusdu.de/dofus3/v1/img/item/15089-128.png"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": 180,
+  "name": "Volkorne Roux",
+  "family": {
+    "id": 6,
+    "name": "Volkorne"
+  },
+  "image_urls": {
+    "icon": "https://api.dofusdu.de/dofus3/v1/img/mount/180-64.png",
+    "sd": "https://api.dofusdu.de/dofus3/v1/img/mount/180-256.png"
+  },
+  "effects": [
+    {
+      "int_minimum": 0,
+      "int_maximum": 1,
+      "type": {
+        "name": "PA",
+        "id": 12,
+        "is_meta": false,
+        "is_active": false
+      },
+      "ignore_int_min": false,
+      "ignore_int_max": false,
+      "formatted": "0 à 1 PA"
+    },
+    {
+      "int_minimum": 0,
+      "int_maximum": 60,
+      "type": {
+        "name": "Dommage Poussée",
+        "id": 62,
+        "is_meta": false,
+        "is_active": false
+      },
+      "ignore_int_min": false,
+      "ignore_int_max": false,
+      "formatted": "0 à 60 Dommage Poussée"
+    }
+  ]
+}
