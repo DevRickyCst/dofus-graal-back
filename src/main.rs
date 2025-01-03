@@ -1,27 +1,45 @@
-// src/main.rs
-
-#[macro_use]
-extern crate diesel;
-
-mod schema;
 mod models;
-mod api;
-mod lib;
-use std::env;
+mod schema;
+use dotenv::dotenv;
 
-use crate::lib::establish_connection;
-use crate::api::data_insertion::fetch_and_insert_item_categories;
-use log::{info, error};
-use env_logger::Env;
+use diesel::prelude::*;
+use diesel::pg::PgConnection;
 
-#[tokio::main]
-async fn main() {
-    // Initialiser le logger
-    env_logger::Builder::from_env(Env::default().default_filter_or("info")).init();
+use models::item_type::NewItemType;
+use schema::item_types;
 
-    // Établir le pool de connexions
-    let pool = establish_connection();
+fn insert_item_types(connection: &mut PgConnection) -> Result<(), diesel::result::Error> {
+    let item_types = [
+        "items-consumables",
+        "items-cosmetics",
+        "items-resources",
+        "items-equipment",
+        "items-quest_items",
+        "mounts",
+        "sets",
+    ];
 
-    // Appeler la fonction pour récupérer et insérer les catégories
-    fetch_and_insert_item_categories(&pool).await;
+    let new_item_types: Vec<NewItemType> = item_types
+        .iter()
+        .map(|name| NewItemType { name })
+        .collect();
+
+    diesel::insert_into(item_types::table)
+        .values(&new_item_types)
+        .execute(connection)?;
+
+    Ok(())
+}
+
+fn main() {
+    dotenv().ok();
+
+    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let mut connection = PgConnection::establish(&database_url)
+        .expect("Error connecting to the database");
+
+    match insert_item_types(&mut connection) {
+        Ok(_) => println!("Item types imported successfully."),
+        Err(err) => eprintln!("Failed to import item types: {}", err),
+    }
 }

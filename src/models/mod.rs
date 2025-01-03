@@ -18,7 +18,7 @@ pub mod item_recipe;
 
 pub use server::Server;
 pub use character_class::CharacterClass;
-pub use item::Item;
+pub use item::*;
 pub use effect_single::EffectSingle;
 pub use recipe_single::RecipeSingle;
 pub use item_category::ItemCategory;
