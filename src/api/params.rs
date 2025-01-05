@@ -32,10 +32,8 @@ pub struct ApiParams {
 
 impl ApiParams {
     pub fn to_extra_url(&self) -> String {
-        let params = vec![
-            format!("page[size]={}", self.page_size),
-            format!("page[number]={}", self.page_number),
-        ];
+        let params = [format!("page[size]={}", self.page_size),
+            format!("page[number]={}", self.page_number)];
 
         // If mounts, dont add item/
         match self.item_category {
