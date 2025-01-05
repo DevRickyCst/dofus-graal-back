@@ -28,7 +28,7 @@ CREATE TABLE elements (
 -- Création de la table recipe_singles
 CREATE TABLE recipe_singles (
     id SERIAL PRIMARY KEY,
-    item_ankama_id INTEGER NOT NULL,
+    ankama_id INTEGER NOT NULL,
     item_subtype VARCHAR(200) NOT NULL,
     quantity INTEGER DEFAULT 1 NOT NULL
 );
@@ -48,12 +48,12 @@ CREATE TABLE effect_singles (
 -- Création de la table servers
 CREATE TABLE servers (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) UNIQUE NOT NULL
+    name VARCHAR(100) UNIQUE NOT NULL,
+    category VARCHAR(100) NOT NULL
 );
 
--- Création de la table character_classes
-CREATE TABLE character_classes (
+-- Création de la table classes
+CREATE TABLE dofus_classes (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) UNIQUE NOT NULL DEFAULT 'random',
-    logo_url VARCHAR(100) NOT NULL DEFAULT 'random'
+    name VARCHAR(100) UNIQUE NOT NULL DEFAULT 'random'
 );

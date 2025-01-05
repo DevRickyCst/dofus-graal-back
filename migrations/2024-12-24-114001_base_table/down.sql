@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS character_classes;
+DROP TABLE IF EXISTS dofus_classes;
 DROP TABLE IF EXISTS servers;
 DROP TABLE IF EXISTS effect_singles;
 DROP TABLE IF EXISTS recipe_singles;

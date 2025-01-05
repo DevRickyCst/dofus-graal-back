@@ -1,45 +1,51 @@
-mod models;
 mod schema;
+mod cli;
+mod operations;
+mod api;
 use dotenv::dotenv;
-
-use diesel::prelude::*;
+mod db_operations;
+pub mod models;
+pub mod constant;
+use cli::{CliArgs, build_cli};
+use operations::{delete_table, sync_items};
 use diesel::pg::PgConnection;
+use diesel::r2d2::{ConnectionManager, Pool};
 
-use models::item_type::NewItemType;
-use schema::item_types;
-
-fn insert_item_types(connection: &mut PgConnection) -> Result<(), diesel::result::Error> {
-    let item_types = [
-        "items-consumables",
-        "items-cosmetics",
-        "items-resources",
-        "items-equipment",
-        "items-quest_items",
-        "mounts",
-        "sets",
-    ];
-
-    let new_item_types: Vec<NewItemType> = item_types
-        .iter()
-        .map(|name| NewItemType { name })
-        .collect();
-
-    diesel::insert_into(item_types::table)
-        .values(&new_item_types)
-        .execute(connection)?;
-
-    Ok(())
-}
 
 fn main() {
+
     dotenv().ok();
 
-    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    let mut connection = PgConnection::establish(&database_url)
-        .expect("Error connecting to the database");
+    // Database initialisation
+    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL doit être défini");
+    let manager = ConnectionManager::<PgConnection>::new(database_url);
+    let pool = Pool::builder()
+        .build(manager)
+        .expect("Erreur lors de la création du pool de connexions");
 
-    match insert_item_types(&mut connection) {
-        Ok(_) => println!("Item types imported successfully."),
-        Err(err) => eprintln!("Failed to import item types: {}", err),
+    let mut conn = pool.get().expect("Impossible d'obtenir une connexion");
+
+    // Cli 
+    let args = CliArgs::from_matches(build_cli().get_matches());
+    match args.mode.as_str() {
+        /*"delete" => match delete_table(&args.table, &mut conn) {
+            Ok(rows_deleted) => println!("{} lignes supprimées dans la table '{}'.", rows_deleted, args.table),
+            Err(e) => eprintln!("Erreur lors de la suppression : {:?}", e),
+        },*/
+        "sync" => {
+            // Appel à `call_api` dans un contexte async
+            tokio::runtime::Runtime::new()
+                .expect("Impossible de créer le runtime tokio")
+                .block_on(async {
+                    match sync_items(&mut conn).await {
+                        Ok(_) => println!("Appel API réussi."),
+                        Err(e) => eprintln!("Erreur lors de l'appel API : {:?}", e),
+                    }
+                });
+        },
+        _ => {
+            eprintln!("Mode inconnu : {}", args.mode);
+            std::process::exit(1);
+        }
     }
 }

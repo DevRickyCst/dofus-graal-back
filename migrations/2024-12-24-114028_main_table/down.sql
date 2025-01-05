@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS sets;
-DROP TABLE IF EXISTS set_stuffs;
-DROP TABLE IF EXISTS set_caracteristiques;
+DROP TABLE IF EXISTS stuffs;
+DROP TABLE IF EXISTS caracteristiques;
 DROP TABLE IF EXISTS characters;
 DROP TABLE IF EXISTS ranges;
 DROP TABLE IF EXISTS items;
