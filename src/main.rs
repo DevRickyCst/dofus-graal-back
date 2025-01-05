@@ -7,7 +7,7 @@ mod db_operations;
 pub mod models;
 pub mod constant;
 use cli::{CliArgs, build_cli};
-use operations::{delete_table, sync_items};
+use operations::sync_items;
 use diesel::pg::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool};
 

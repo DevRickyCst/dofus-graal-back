@@ -2,7 +2,6 @@ use reqwest::Error;
 use super::{ApiParams, ApiResponse, DetailedItem};
 use crate::api::params::Item_categories;
 use crate::api::models::Links;
-use diesel::pg::PgConnection;
 
 const BASE_URL: &str = "https://api.dofusdu.de/dofus3/v1/fr";
 

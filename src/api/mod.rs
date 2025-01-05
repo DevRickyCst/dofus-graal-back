@@ -4,5 +4,4 @@ pub mod client;
 
 pub use models::*;
 pub use params::*;
-pub use client::*;
 

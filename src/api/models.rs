@@ -1,8 +1,4 @@
 use serde::Deserialize;
-use diesel::PgConnection;
-use crate::schema::effect_singles::dsl::*;
-use diesel::QueryResult;
-use crate::models::item_model::*;
 use crate::models::dofus_models::*;
 use crate::models::item_meta_models::*;
 use diesel::RunQueryDsl;

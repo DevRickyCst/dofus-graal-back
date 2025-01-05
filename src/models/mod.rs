@@ -6,9 +6,6 @@ pub mod item_meta_models;
 use diesel::prelude::*;
 use crate::schema::*;
 
-use dofus_models::*;
-use item_model::*;
-use item_meta_models::*;
 use users_models::{ Character };
 
 // SetCaracteristique Model

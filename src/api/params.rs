@@ -32,7 +32,7 @@ pub struct ApiParams {
 
 impl ApiParams {
     pub fn to_extra_url(&self) -> String {
-        let mut params = vec![
+        let params = vec![
             format!("page[size]={}", self.page_size),
             format!("page[number]={}", self.page_number),
         ];
