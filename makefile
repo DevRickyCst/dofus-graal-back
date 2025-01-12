@@ -3,3 +3,6 @@ migrations:
 
 migration-reverts:
 	diesel migration revert
+
+sync:
+	cargo run sync

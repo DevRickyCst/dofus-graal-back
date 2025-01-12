@@ -1,13 +1,15 @@
 mod schema;
-mod cli;
+pub mod cli;
 mod operations;
 mod api;
-use dotenv::dotenv;
 mod db_operations;
 pub mod models;
 pub mod constant;
+
+use dotenv::dotenv;
+
 use cli::{CliArgs, build_cli};
-use operations::{delete_table, sync_items};
+use operations::{ sync_items, delete_table };
 use diesel::pg::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool};
 
@@ -28,10 +30,10 @@ fn main() {
     // Cli 
     let args = CliArgs::from_matches(build_cli().get_matches());
     match args.mode.as_str() {
-        /*"delete" => match delete_table(&args.table, &mut conn) {
-            Ok(rows_deleted) => println!("{} lignes supprimées dans la table '{}'.", rows_deleted, args.table),
+        "delete" => match delete_table(&mut conn) {
+            Ok(rows_deleted) => println!("{} lignes supprimées.", rows_deleted),
             Err(e) => eprintln!("Erreur lors de la suppression : {:?}", e),
-        },*/
+        },
         "sync" => {
             // Appel à `call_api` dans un contexte async
             tokio::runtime::Runtime::new()
