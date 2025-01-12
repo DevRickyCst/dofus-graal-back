@@ -1,3 +1,12 @@
+use crate::models::item_meta_models::NewItemCategory;
+
+pub const ITEM_CATEGORIES: &[NewItemCategory] = &[
+    NewItemCategory { id: 1, name: "consumables" },
+    NewItemCategory { id: 2, name: "cosmetics" },
+    NewItemCategory { id: 3, name: "equipment" },
+    NewItemCategory { id: 4, name: "quest" },
+];
+
 pub const SERVERS: &[(&str, &str)] = &[
 
     ("brial 1", "pionnier"),

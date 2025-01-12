@@ -1,13 +1,13 @@
 -- Création de la table item_categories
 CREATE TABLE item_categories (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(20) UNIQUE NOT NULL
+    name VARCHAR(200) UNIQUE NOT NULL
 );
 
 -- Création de la table item_types
 CREATE TABLE item_types (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(20) UNIQUE NOT NULL
+    name VARCHAR(200) UNIQUE NOT NULL
 );
 
 -- Création de la table image_urls
@@ -15,10 +15,14 @@ CREATE TABLE image_urls (
     id SERIAL PRIMARY KEY,
     icon VARCHAR(200) NOT NULL,
     sd VARCHAR(200) NOT NULL,
-    hq VARCHAR(200) NOT NULL,
-    hd VARCHAR(200) NOT NULL
+    hq VARCHAR(200),
+    hd VARCHAR(200)
 );
-
+CREATE TABLE ranges (
+    id SERIAL PRIMARY KEY,
+    min INTEGER NOT NULL,
+    max INTEGER NOT NULL
+);
 -- Création de la table elements
 CREATE TABLE elements (
     id SERIAL PRIMARY KEY,
@@ -28,7 +32,7 @@ CREATE TABLE elements (
 -- Création de la table recipe_singles
 CREATE TABLE recipe_singles (
     id SERIAL PRIMARY KEY,
-    ankama_id INTEGER NOT NULL,
+    item_ankama_id INTEGER NOT NULL,
     item_subtype VARCHAR(200) NOT NULL,
     quantity INTEGER DEFAULT 1 NOT NULL
 );
@@ -41,8 +45,8 @@ CREATE TABLE effect_singles (
     element_id INTEGER NOT NULL,
     ignore_int_min BOOLEAN DEFAULT FALSE NOT NULL,
     ignore_int_max BOOLEAN DEFAULT FALSE NOT NULL,
-    formatted VARCHAR(200) NOT NULL,
-    FOREIGN KEY (element_id) REFERENCES elements(id) ON DELETE CASCADE
+    formatted VARCHAR(200) NOT NULL--,
+    --FOREIGN KEY (element_id) REFERENCES elements(id) ON DELETE CASCADE
 );
 
 -- Création de la table servers

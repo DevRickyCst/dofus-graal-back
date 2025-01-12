@@ -6,3 +6,4 @@ DROP TABLE IF EXISTS elements;
 DROP TABLE IF EXISTS image_urls;
 DROP TABLE IF EXISTS item_types;
 DROP TABLE IF EXISTS item_categories;
+DROP TABLE IF EXISTS ranges;

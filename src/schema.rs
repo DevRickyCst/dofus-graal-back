@@ -61,16 +61,16 @@ diesel::table! {
         #[max_length = 200]
         sd -> Varchar,
         #[max_length = 200]
-        hq -> Varchar,
+        hq -> Nullable<Varchar>,
         #[max_length = 200]
-        hd -> Varchar,
+        hd -> Nullable<Varchar>,
     }
 }
 
 diesel::table! {
     item_categories (id) {
         id -> Int4,
-        #[max_length = 20]
+        #[max_length = 200]
         name -> Varchar,
     }
 }
@@ -92,7 +92,7 @@ diesel::table! {
 diesel::table! {
     item_types (id) {
         id -> Int4,
-        #[max_length = 20]
+        #[max_length = 200]
         name -> Varchar,
     }
 }
@@ -115,13 +115,13 @@ diesel::table! {
         is_two_handed -> Nullable<Bool>,
         critical_hit_probability -> Nullable<Int4>,
         critical_hit_bonus -> Nullable<Int4>,
+        range_id -> Nullable<Int4>,
     }
 }
 
 diesel::table! {
     ranges (id) {
         id -> Int4,
-        ankama_id -> Int4,
         min -> Int4,
         max -> Int4,
     }
@@ -130,7 +130,7 @@ diesel::table! {
 diesel::table! {
     recipe_singles (id) {
         id -> Int4,
-        ankama_id -> Int4,
+        item_ankama_id -> Int4,
         #[max_length = 200]
         item_subtype -> Varchar,
         quantity -> Int4,
@@ -172,15 +172,12 @@ diesel::table! {
 
 diesel::joinable!(characters -> dofus_classes (dofus_classes_id));
 diesel::joinable!(characters -> servers (server_id));
-diesel::joinable!(effect_singles -> elements (element_id));
 diesel::joinable!(item_effects -> effect_singles (effect_id));
 diesel::joinable!(item_effects -> items (ankama_id));
 diesel::joinable!(item_recipes -> items (ankama_id));
 diesel::joinable!(item_recipes -> recipe_singles (recipe_id));
 diesel::joinable!(items -> image_urls (image_urls_id));
-diesel::joinable!(items -> item_categories (category_id));
-diesel::joinable!(items -> item_types (type_id));
-diesel::joinable!(ranges -> items (ankama_id));
+diesel::joinable!(items -> ranges (range_id));
 diesel::joinable!(sets -> caracteristiques (caracteristique_id));
 diesel::joinable!(sets -> characters (character_id));
 diesel::joinable!(sets -> stuffs (stuff_id));

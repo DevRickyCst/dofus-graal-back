@@ -14,19 +14,14 @@ CREATE TABLE items (
     is_two_handed BOOLEAN,
     critical_hit_probability INTEGER,
     critical_hit_bonus INTEGER,
-    FOREIGN KEY (category_id) REFERENCES item_categories(id) ON DELETE CASCADE,
-    FOREIGN KEY (type_id) REFERENCES item_types(id) ON DELETE CASCADE,
+    range_id INTEGER,
+    --FOREIGN KEY (category_id) REFERENCES item_categories(id) ON DELETE CASCADE,
+    -- FOREIGN KEY (type_id) REFERENCES item_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (range_id) REFERENCES ranges(id) ON DELETE CASCADE,
     FOREIGN KEY (image_urls_id) REFERENCES image_urls(id) ON DELETE CASCADE
 );
 
--- Création de la table ranges
-CREATE TABLE ranges (
-    id INTEGER PRIMARY KEY,
-    ankama_id INTEGER NOT NULL,
-    min INTEGER NOT NULL,
-    max INTEGER NOT NULL,
-    FOREIGN KEY (ankama_id) REFERENCES items(ankama_id) ON DELETE CASCADE
-);
+
 
 -- Création de la table characters
 CREATE TABLE characters (

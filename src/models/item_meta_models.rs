@@ -6,7 +6,7 @@ use diesel::{ Identifiable, Insertable };
 #[derive(Debug, Queryable, Identifiable, serde::Deserialize)]
 #[diesel(table_name = image_urls)]
 pub struct ImageUrls {
-    pub id: Option<i32>,
+    pub id: i32,
     pub icon: String,
     pub sd: String,
     pub hq: Option<String>,
@@ -14,9 +14,9 @@ pub struct ImageUrls {
 }
 
 
-#[derive(Insertable)]
+#[derive(Insertable, Debug)]
 #[diesel(table_name = image_urls)]
-pub struct NewImageUrl<'a> {
+pub struct NewImageUrls<'a> {
     pub icon: &'a str,
     pub sd: &'a str,
     pub hq: Option<&'a str>,
@@ -32,10 +32,40 @@ pub struct ItemCategory {
     pub name: String,
 }
 
+#[derive(Insertable, Debug)]
+#[diesel(table_name = item_categories)]
+pub struct NewItemCategory<'a> {
+    pub id: i32,
+
+    pub name: &'a str,
+}
+
 // ItemType Model
 #[derive(Debug, Queryable, Identifiable, serde::Deserialize)]
 #[diesel(table_name = item_types)]
 pub struct ItemType {
     pub id: i32,
     pub name: String,
+}
+
+#[derive(Insertable, Debug)]
+#[diesel(table_name = item_types)]
+pub struct NewItemType<'a> {
+    pub id: i32,
+    pub name: &'a str,
+}
+
+#[derive(Debug, Queryable, Identifiable, serde::Deserialize)]
+#[diesel(table_name = ranges)]
+pub struct Range {
+    pub id: i32,
+    pub min: i32,
+    pub max: i32,
+}
+
+#[derive(Insertable, Debug)]
+#[diesel(table_name = ranges)]
+pub struct NewRange {
+    pub min: i32,
+    pub max: i32,
 }

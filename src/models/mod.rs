@@ -1,12 +1,12 @@
 pub mod dofus_models;
-pub mod users_models;
+pub mod character_models;
 pub mod item_model;
 pub mod item_meta_models;
 
 use diesel::prelude::*;
 use crate::schema::*;
 
-use users_models::{ Character };
+use character_models::{ Character };
 
 // SetCaracteristique Model
 #[derive(Debug, Queryable, Identifiable)]
