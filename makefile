@@ -1,3 +1,7 @@
+deploy-local:
+	docker compose up -d
+	diesel migration run
+
 migrations:
 	diesel migration run
 
