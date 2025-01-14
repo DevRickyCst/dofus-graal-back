@@ -9,7 +9,7 @@ pub fn insert_and_retrieve_record<'a, Model, NewModel, Table, Values>(
     connection: &'a mut PgConnection,
 ) -> Result<Model, diesel::result::Error>
 where
-    NewModel: Insertable<Table, Values = Values> + std::fmt::Debug,
+    NewModel: Insertable<Table, Values = Values>,
     InsertStatement<Table, Values>:  LoadQuery<'a, PgConnection, Model>,
     Table: diesel::Table,
 {

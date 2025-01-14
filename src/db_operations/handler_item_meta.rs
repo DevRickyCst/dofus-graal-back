@@ -2,8 +2,7 @@ use diesel::result::Error;
 use diesel::PgConnection;
 use crate::api::models::*;
 use crate::db_operations::crud::*;
-use crate::models::dofus_models::*;
-use crate::models::item_meta_models::*;
+use crate::models::statics::item_meta::{insertable::*, queryable::*};
 
 pub fn save_categories(conn: &mut PgConnection) -> Result<(), Error> {
     use crate::schema::item_categories::dsl::*;
@@ -12,7 +11,7 @@ pub fn save_categories(conn: &mut PgConnection) -> Result<(), Error> {
     for category in crate::constant::ITEM_CATEGORIES {
         diesel::insert_into(item_categories)
             .values(category)
-            .on_conflict_do_nothing() // Évite les doublons
+            .on_conflict_do_nothing()
             .execute(conn)?;
     }
 
