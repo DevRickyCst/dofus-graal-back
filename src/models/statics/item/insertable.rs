@@ -1,3 +1,4 @@
+// Relative path: src/models/statics/item/insertable.rs
 use crate::schema::*;
 use diesel::Insertable;
 

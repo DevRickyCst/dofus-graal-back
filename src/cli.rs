@@ -1,3 +1,4 @@
+// Relative path: src/cli.rs
 use clap::{arg, Command};
 
 /// Arguments CLI

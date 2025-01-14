@@ -1,3 +1,4 @@
+// Relative path: src/models/statics/item/queryable.rs
 use diesel::prelude::*;
 use crate::schema::*;
 use diesel::Identifiable;

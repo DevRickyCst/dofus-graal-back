@@ -1,3 +1,4 @@
+// Relative path: src/models/statics/item_meta/queryable.rs
 use diesel::prelude::*;
 use crate::schema::*;
 use diesel::Identifiable;
@@ -45,7 +46,7 @@ pub struct Effect {
     pub id: i32,
     pub int_minimum: i32,
     pub int_maximum: i32,
-    pub element_id: i32,
+    pub element_id: Option<i32>,
     pub ignore_int_min: bool,
     pub ignore_int_max: bool,
     pub formatted: String,

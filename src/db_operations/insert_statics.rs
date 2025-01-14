@@ -1,3 +1,4 @@
+// Relative path: src/db_operations/insert_statics.rs
 /*
 use crate::models::character_class::NewCharacterClass;
 use crate::schema::servers::dsl::servers;

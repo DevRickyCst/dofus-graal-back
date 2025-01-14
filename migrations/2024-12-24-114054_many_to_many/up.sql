@@ -1,3 +1,4 @@
+-- Relative path: migrations/2024-12-24-114054_many_to_many/up.sql
 -- Création de la table intermédiaire item_effects
 CREATE TABLE item_effects (
     ankama_id INTEGER NOT NULL,

@@ -1,3 +1,4 @@
+// Relative path: src/main.rs
 mod schema;
 pub mod cli;
 mod operations;

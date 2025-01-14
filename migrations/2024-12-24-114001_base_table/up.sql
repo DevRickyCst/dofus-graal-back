@@ -1,3 +1,4 @@
+-- Relative path: migrations/2024-12-24-114001_base_table/up.sql
 -- Création de la table item_categories
 CREATE TABLE item_categories (
     id SERIAL PRIMARY KEY,
@@ -42,7 +43,7 @@ CREATE TABLE effect_singles (
     id SERIAL PRIMARY KEY,
     int_minimum INTEGER DEFAULT 0 NOT NULL,
     int_maximum INTEGER DEFAULT 0 NOT NULL,
-    element_id INTEGER NOT NULL,
+    element_id INTEGER,
     ignore_int_min BOOLEAN DEFAULT FALSE NOT NULL,
     ignore_int_max BOOLEAN DEFAULT FALSE NOT NULL,
     formatted VARCHAR(200) NOT NULL--,

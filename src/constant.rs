@@ -1,3 +1,4 @@
+// Relative path: src/constant.rs
 use crate::models::statics::item_meta::insertable::NewItemCategory;
 
 pub const ITEM_CATEGORIES: &[NewItemCategory] = &[

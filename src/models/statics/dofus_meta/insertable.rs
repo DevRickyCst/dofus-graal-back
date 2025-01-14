@@ -1,3 +1,4 @@
+// Relative path: src/models/statics/dofus_meta/insertable.rs
 use diesel::prelude::*;
 use crate::schema::*;
 

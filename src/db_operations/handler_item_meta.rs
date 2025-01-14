@@ -1,6 +1,6 @@
+// Relative path: src/db_operations/handler_item_meta.rs
 use diesel::result::Error;
 use diesel::PgConnection;
-use crate::api::models::*;
 use crate::db_operations::crud::*;
 use crate::models::statics::item_meta::{insertable::*, queryable::*};
 
@@ -20,11 +20,9 @@ pub fn save_categories(conn: &mut PgConnection) -> Result<(), Error> {
 
 
 
-pub fn handle_item_type(conn: &mut PgConnection, item: &DFDDetailedItem) -> Result<i32, Error> {
+pub fn handle_item_type(conn: &mut PgConnection, item_type: &NewItemType) -> Result<i32, Error> {
     use crate::schema::item_types::dsl::*;
     use diesel::prelude::*;
-
-    let item_type = &item.item_type;
 
     match item_types
         .filter(id.eq(item_type.id))
@@ -33,11 +31,7 @@ pub fn handle_item_type(conn: &mut PgConnection, item: &DFDDetailedItem) -> Resu
     {
         Ok(existing_id) => Ok(existing_id),
         Err(diesel::result::Error::NotFound) => {
-            let _new_item_type = NewItemType {
-                id: item_type.id,
-                name: &item_type.name,
-            };
-            let new_item_type : ItemType = insert_and_retrieve_record(_new_item_type, item_types, conn)?;
+            let new_item_type : ItemType = insert_and_retrieve_record(item_type, item_types, conn)?;
             Ok(new_item_type.id)
         }
         Err(e) => {
@@ -47,42 +41,31 @@ pub fn handle_item_type(conn: &mut PgConnection, item: &DFDDetailedItem) -> Resu
     }
 }
 
-pub fn handle_image_url(conn: &mut PgConnection, item: &DFDDetailedItem) -> Result<i32, Error> {
-    let item_image_urls_id: i32 = if let Some(image_urls) = item.image_urls.as_ref() {
-        use crate::schema::image_urls::dsl as image_urls_table;
-
-        let new_image_urls: NewImageUrls = image_urls.into();
-        let image_urls_record: ImageUrls =
-            insert_and_retrieve_record(new_image_urls, image_urls_table::image_urls, conn)?;
-        image_urls_record.id
-    } else {
-        -1
-    };
-
-    Ok(item_image_urls_id)
+pub fn handle_image_url(conn: &mut PgConnection, image_urls: &NewImageUrls) -> Result<i32, Error> {
+    use crate::schema::image_urls::dsl as image_urls_table;
+    let new_image : ImageUrls = insert_and_retrieve_record(image_urls, image_urls_table::image_urls, conn)?;
+    Ok(new_image.id)
 }
 
-pub fn handle_item_range(conn: &mut PgConnection, item: &DFDDetailedItem) -> Result<Option<i32>, Error> {
-    if let Some(range) = &item.range {
+
+pub fn handle_item_range(conn: &mut PgConnection, range: Option<&NewRange>) -> Result<Option<i32>, Error> {
+    if let Some(range) = range {
         use crate::schema::ranges::dsl::*;
 
-        let new_range: NewRange = range.into();
-        let range_record: Range = insert_and_retrieve_record(new_range, ranges, conn)?;
+        let range_record: Range = insert_and_retrieve_record(range, ranges, conn)?;
         Ok(Some(range_record.id))
     } else {
         Ok(None)
     }
 }
 
-pub fn handle_effects(conn: &mut PgConnection, item: &DFDDetailedItem) -> Result<Option<Vec<i32>>, Error> {
-    if let Some(effects) = &item.effects {
+pub fn handle_effects(conn: &mut PgConnection, effects: Option<Vec<NewEffect>>) -> Result<Option<Vec<i32>>, Error> {
+    if let Some(effects) = effects {
         let mut effect_ids = Vec::new();
         for effect in effects {
             use crate::schema::effect_singles::dsl::*;
 
-            let new_effect: NewEffect = effect.into();
-
-            let effect_record: Effect = insert_and_retrieve_record(new_effect, effect_singles, conn)?;
+            let effect_record: Effect = insert_and_retrieve_record(effect, effect_singles, conn)?;
             effect_ids.push(effect_record.id);
         }
         Ok(Some(effect_ids))
@@ -91,15 +74,13 @@ pub fn handle_effects(conn: &mut PgConnection, item: &DFDDetailedItem) -> Result
     }
 }
 
-pub fn handle_recipes(conn: &mut PgConnection, item: &DFDDetailedItem) -> Result<Option<Vec<i32>>, Error> {
-    if let Some(recipes) = &item.recipe {
+pub fn handle_recipes(conn: &mut PgConnection, recipes: Option<Vec<NewRecipe>>) -> Result<Option<Vec<i32>>, Error> {
+    if let Some(recipes) = recipes {
         let mut recipe_ids = Vec::new();
         for recipe in recipes {
             use crate::schema::recipe_singles::dsl::*;
 
-            let new_recipe: NewRecipe = recipe.into();
-
-            let recipe_record: Recipe = insert_and_retrieve_record(new_recipe, recipe_singles, conn)?;
+            let recipe_record: Recipe = insert_and_retrieve_record(recipe, recipe_singles, conn)?;
             
             recipe_ids.push(recipe_record.id);
         }
