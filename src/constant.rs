@@ -1,4 +1,4 @@
-use crate::models::item_meta_models::NewItemCategory;
+use crate::models::statics::item_meta::insertable::NewItemCategory;
 
 pub const ITEM_CATEGORIES: &[NewItemCategory] = &[
     NewItemCategory { id: 1, name: "consumables" },

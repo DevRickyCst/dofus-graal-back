@@ -1,7 +1,7 @@
 use diesel::PgConnection;
 use diesel::result::Error;
 
-use crate::models::item_model::*;
+use crate::models::statics::item::{insertable::*, queryable::*};
 use crate::api::models::DFDDetailedItem;
 use crate::db_operations::handler_item_meta::*;
 use crate::db_operations::crud::*;

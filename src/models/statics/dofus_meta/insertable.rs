@@ -2,7 +2,6 @@ use diesel::prelude::*;
 use crate::schema::*;
 
 
-// Server Model
 #[derive(Debug, Queryable, Identifiable)]
 #[diesel(table_name = servers)]
 pub struct Server {
@@ -12,7 +11,6 @@ pub struct Server {
 }
 
 
-// DofusClass Model
 #[derive(Debug, Queryable, Identifiable)]
 #[diesel(table_name = dofus_classes)]
 pub struct DofusClass {
@@ -20,7 +18,6 @@ pub struct DofusClass {
     pub name: String,
 }
 
-// Character Model
 #[derive(Debug, Queryable, Identifiable, Associations)]
 #[diesel(table_name = characters)]
 #[diesel(belongs_to(Server, foreign_key = server_id))]
@@ -33,4 +30,3 @@ pub struct Character {
     pub dofus_classes_id: Option<i32>,
     pub user_id: i32,
 }
-

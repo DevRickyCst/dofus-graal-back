@@ -1,12 +1,8 @@
-pub mod dofus_models;
-pub mod character_models;
-pub mod item_model;
-pub mod item_meta_models;
-
+pub mod statics;
 use diesel::prelude::*;
 use crate::schema::*;
 
-use character_models::{ Character };
+use statics::dofus_meta::insertable::*;
 
 // SetCaracteristique Model
 #[derive(Debug, Queryable, Identifiable)]

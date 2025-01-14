@@ -1,9 +1,8 @@
 use serde::Deserialize;
-use crate::models::dofus_models::*;
-use crate::models::item_meta_models::*;
+use crate::models::statics::item_meta::insertable::*;
 
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct ApiResponse {
     pub _links: Links,
     pub items: Vec<DFDItem>,
@@ -11,23 +10,23 @@ pub struct ApiResponse {
 
 #[derive(Debug, Deserialize)]
 pub struct Links {
-    pub first: String,
-    pub prev: Option<String>,
+    //pub first: String,
+    //pub prev: Option<String>,
     pub next: Option<String>,
-    pub last: String,
+    //pub last: String,
 }
 
 impl Links {
-    pub fn is_first(&self) -> bool {
+    /*pub fn is_first(&self) -> bool {
         self.prev.is_none()
-    }
+    }*/
 
     pub fn is_last(&self) -> bool {
         self.next.is_none()
     }
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct DFDImageUrls {
     pub icon: String,
     pub sd: String,
@@ -35,31 +34,31 @@ pub struct DFDImageUrls {
     pub hd: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct DFDItemType {
     pub id: i32,
     pub name: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct DFDRange {
     pub min: i32,
     pub max: i32,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct DFDItem {
     pub ankama_id: i32,
-    pub effects: Option<Vec<DFDEffect>>,
-    pub image_urls: Option<DFDImageUrls>,
-    pub level: i16,
-    pub name: String,
-    pub recipes: Option<Vec<DFDRecipe>>,
-    #[serde(rename = "type")]
-    pub item_type: Option<DFDItemType>
+    //pub effects: Option<Vec<DFDEffect>>,
+    //pub image_urls: Option<DFDImageUrls>,
+    //pub level: i16,
+    //pub name: String,
+    //pub recipes: Option<Vec<DFDRecipe>>,
+    //#[serde(rename = "type")]
+    //pub item_type: Option<DFDItemType>
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct DFDEffect {
     pub int_minimum: i32,
     pub int_maximum: i32,
@@ -69,7 +68,7 @@ pub struct DFDEffect {
     pub formatted: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct DFDRecipe {
     pub item_ankama_id: i32,
     pub item_subtype: String,
@@ -77,7 +76,7 @@ pub struct DFDRecipe {
 }
 
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub struct DFDDetailedItem {
     pub ankama_id: i32,
     pub name: String,
@@ -133,7 +132,7 @@ impl<'a> From<&'a DFDEffect> for NewEffect<'a> {
         NewEffect {
             int_minimum: df_effect.int_minimum,
             int_maximum: df_effect.int_maximum,
-            element_id: df_effect.element_id.unwrap_or(0), // Valeur par défaut si None
+            element_id: df_effect.element_id.unwrap_or(0),
             ignore_int_min: df_effect.ignore_int_min,
             ignore_int_max: df_effect.ignore_int_max,
             formatted: &df_effect.formatted,
