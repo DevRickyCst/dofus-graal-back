@@ -52,7 +52,7 @@ pub struct DFDDetailedItem {
     pub is_two_handed: Option<bool>,
     pub level: i32,
     pub pods: Option<i32>,
-    pub image_urls: Option<NewImageUrls>,
+    pub image_urls: NewImageUrls,
     pub effects: Option<Vec<NewEffect>>,
     pub critical_hit_probability: Option<i32>,
     pub critical_hit_bonus: Option<i32>,

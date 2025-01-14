@@ -42,7 +42,7 @@ pub struct NewRange {
 pub struct NewEffect {
     pub int_minimum: i32,
     pub int_maximum: i32,
-    pub element_id: i32,
+    pub element_id: Option<i32>,
     pub ignore_int_min: bool,
     pub ignore_int_max: bool,
     pub formatted: String,

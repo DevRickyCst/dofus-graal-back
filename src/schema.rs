@@ -1,4 +1,3 @@
-// Relative path: src/schema.rs
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
@@ -38,7 +37,7 @@ diesel::table! {
         id -> Int4,
         int_minimum -> Int4,
         int_maximum -> Int4,
-        element_id -> Int4,
+        element_id -> Nullable<Int4>,
         ignore_int_min -> Bool,
         ignore_int_max -> Bool,
         #[max_length = 200]

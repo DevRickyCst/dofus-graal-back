@@ -43,7 +43,7 @@ CREATE TABLE effect_singles (
     id SERIAL PRIMARY KEY,
     int_minimum INTEGER DEFAULT 0 NOT NULL,
     int_maximum INTEGER DEFAULT 0 NOT NULL,
-    element_id INTEGER NOT NULL,
+    element_id INTEGER,
     ignore_int_min BOOLEAN DEFAULT FALSE NOT NULL,
     ignore_int_max BOOLEAN DEFAULT FALSE NOT NULL,
     formatted VARCHAR(200) NOT NULL--,

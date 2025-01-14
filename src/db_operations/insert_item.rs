@@ -11,9 +11,9 @@ use crate::db_operations::crud::*;
 pub fn save_item(conn: &mut PgConnection, item: DFDDetailedItem, categ_id: i32) -> Result<(), Error> {
 
 
-    let _image_url_id: i32 = handle_image_url(conn, &item)?;
-    let _type_id: i32 = handle_item_type(conn, &item)?;
-    let item_range_id: Option<i32> = handle_item_range(conn, &item)?;
+    let _image_url_id: i32 = handle_image_url(conn, &item.image_urls)?;
+    let _type_id: i32 = handle_item_type(conn, &item.item_type)?;
+    let item_range_id: Option<i32> = handle_item_range(conn, item.range.as_ref())?;
 
     use crate::schema::items::dsl::*;
 
@@ -39,10 +39,10 @@ pub fn save_item(conn: &mut PgConnection, item: DFDDetailedItem, categ_id: i32) 
     let new_item :Item = insert_and_retrieve_record(_new_item, items, conn)?;
 
     // Gestion des Effets
-    let effect_ids : Option<Vec<i32>> = handle_effects(conn, &item)?;
+    let effect_ids : Option<Vec<i32>> = handle_effects(conn, item.effects)?;
     handle_item_effects(conn, new_item.ankama_id, effect_ids)?;
 
-    let recipe_ids : Option<Vec<i32>> = handle_recipes(conn, &item)?;
+    let recipe_ids : Option<Vec<i32>> = handle_recipes(conn, item.recipe)?;
     handle_item_recipes(conn, new_item.ankama_id, recipe_ids)?;
 
     Ok(())
