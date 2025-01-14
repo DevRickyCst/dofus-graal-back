@@ -1,3 +1,4 @@
+-- Relative path: migrations/2024-12-24-114001_base_table/up.sql
 -- Création de la table item_categories
 CREATE TABLE item_categories (
     id SERIAL PRIMARY KEY,

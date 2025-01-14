@@ -1,3 +1,4 @@
+-- Relative path: migrations/2024-12-24-114028_main_table/up.sql
 -- Création de la table items
 CREATE TABLE items (
     ankama_id INTEGER PRIMARY KEY,

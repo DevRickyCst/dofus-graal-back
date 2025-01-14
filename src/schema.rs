@@ -1,3 +1,4 @@
+// Relative path: src/schema.rs
 // @generated automatically by Diesel CLI.
 
 diesel::table! {

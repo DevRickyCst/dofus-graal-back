@@ -1,3 +1,4 @@
+// Relative path: src/models/mod.rs
 pub mod statics;
 use diesel::prelude::*;
 use crate::schema::*;

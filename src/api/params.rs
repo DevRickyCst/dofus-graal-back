@@ -1,3 +1,4 @@
+// Relative path: src/api/params.rs
 
 #[derive(Debug)]
 pub struct ApiParams<'a> {

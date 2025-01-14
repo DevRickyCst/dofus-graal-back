@@ -1,3 +1,4 @@
+// Relative path: src/operations.rs
 
 use diesel::prelude::*;
 use diesel::dsl::delete;
