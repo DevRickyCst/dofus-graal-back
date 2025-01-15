@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: cho3Ohmo
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      # Étape 1 : Vérifier le code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Installer Rust
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+
+      # Étape 3 : Installer Diesel CLI
+      - name: Install Diesel CLI
+        run: cargo install diesel_cli --no-default-features --features postgres
+
+      # Étape 4 : Configurer la Base de Données
+      - name: Set up database URL
+        run: echo "TEST_DATABASE_URL=postgres://postgres:cho3Ohmo@localhost:5432/test_db" >> $GITHUB_ENV
+
+      # Étape 5 : Appliquer les Migrations
+      - name: Run Diesel migrations
+        env:
+          DATABASE_URL: ${{ env.TEST_DATABASE_URL }}
+        run: diesel migration run
+
+      # Étape 6 : Exécuter les Tests
+      - name: Run tests
+        env:
+          TEST_DATABASE_URL: ${{ env.TEST_DATABASE_URL }}
+        run: cargo test -- --nocapture
