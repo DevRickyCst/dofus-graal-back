@@ -11,5 +11,18 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  postgres_test:
+    image: postgres:17
+    container_name: dofus_test_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: cho3Ohmo
+      POSTGRES_DB: test_db
+    ports:
+      - "5433:5433" # Port local différent pour éviter les conflits avec la DB principale
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+
 volumes:
   postgres_data:
+  postgres_test_data:
