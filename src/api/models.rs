@@ -1,7 +1,6 @@
 // Relative path: src/api/models.rs
-use serde::Deserialize;
 use crate::models::statics::item_meta::insertable::*;
-
+use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct ApiResponse {
@@ -27,7 +26,6 @@ impl Links {
     }
 }
 
-
 #[derive(Deserialize)]
 pub struct DFDItem {
     pub ankama_id: i32,
@@ -39,7 +37,6 @@ pub struct DFDItem {
     //#[serde(rename = "type")]
     //pub item_type: Option<DFDItemType>
 }
-
 
 #[derive(Deserialize)]
 pub struct DFDDetailedItem {

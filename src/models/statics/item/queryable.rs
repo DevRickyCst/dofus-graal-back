@@ -1,8 +1,7 @@
 // Relative path: src/models/statics/item/queryable.rs
-use diesel::prelude::*;
 use crate::schema::*;
+use diesel::prelude::*;
 use diesel::Identifiable;
-
 
 #[derive(Queryable, Identifiable)]
 #[diesel(primary_key(ankama_id))]

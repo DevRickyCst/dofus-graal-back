@@ -1,7 +1,7 @@
 // Relative path: src/models/mod.rs
 pub mod statics;
-use diesel::prelude::*;
 use crate::schema::*;
+use diesel::prelude::*;
 
 use statics::dofus_meta::insertable::*;
 
@@ -32,8 +32,6 @@ pub struct Stuff {
     pub bouclier_id: Option<i32>,
     pub arme_id: Option<i32>,
 }
-
-
 
 #[derive(Debug, Queryable, Associations)]
 #[diesel(table_name = sets)]

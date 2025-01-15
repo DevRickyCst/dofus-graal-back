@@ -1,7 +1,6 @@
 // Relative path: src/models/statics/dofus_meta/insertable.rs
-use diesel::prelude::*;
 use crate::schema::*;
-
+use diesel::prelude::*;
 
 #[derive(Debug, Queryable, Identifiable)]
 #[diesel(table_name = servers)]
@@ -10,7 +9,6 @@ pub struct Server {
     pub name: String,
     pub category: String,
 }
-
 
 #[derive(Debug, Queryable, Identifiable)]
 #[diesel(table_name = dofus_classes)]

@@ -2,7 +2,6 @@
 use crate::schema::*;
 use diesel::Insertable;
 
-
 #[derive(Insertable, serde::Deserialize)]
 #[diesel(table_name = image_urls)]
 pub struct NewImageUrls {
@@ -12,14 +11,12 @@ pub struct NewImageUrls {
     pub hd: Option<String>,
 }
 
-
 #[derive(Insertable)]
 #[diesel(table_name = item_categories)]
 pub struct NewItemCategory<'a> {
     pub id: i32,
     pub name: &'a str,
 }
-
 
 #[derive(Insertable, serde::Deserialize)]
 #[diesel(table_name = item_types)]
@@ -28,14 +25,12 @@ pub struct NewItemType {
     pub name: String,
 }
 
-
 #[derive(Insertable, serde::Deserialize)]
 #[diesel(table_name = ranges)]
 pub struct NewRange {
     pub min: i32,
     pub max: i32,
 }
-
 
 #[derive(Insertable, serde::Deserialize)]
 #[diesel(table_name = effect_singles)]
@@ -48,14 +43,12 @@ pub struct NewEffect {
     pub formatted: String,
 }
 
-
 #[derive(Insertable)]
 #[diesel(table_name = item_effects)]
 pub struct NewItemEffect {
     pub ankama_id: i32,
     pub effect_id: i32,
 }
-
 
 #[derive(Insertable, serde::Deserialize)]
 #[diesel(table_name = recipe_singles)]
@@ -64,7 +57,6 @@ pub struct NewRecipe {
     pub item_subtype: String,
     pub quantity: i32,
 }
-
 
 #[derive(Insertable)]
 #[diesel(table_name = item_recipes)]

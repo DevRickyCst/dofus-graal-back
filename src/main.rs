@@ -1,34 +1,27 @@
 // Relative path: src/main.rs
-mod schema;
-pub mod cli;
-mod operations;
 mod api;
-mod db_operations;
-pub mod models;
+pub mod cli;
 pub mod constant;
-
+pub mod db;
+pub mod models;
+mod operations;
+mod schema;
+pub mod test_utils;
 use dotenv::dotenv;
 
-use cli::{CliArgs, build_cli};
-use operations::{ sync_items, delete_table };
-use diesel::pg::PgConnection;
-use diesel::r2d2::{ConnectionManager, Pool};
+use cli::{build_cli, CliArgs};
 
-
+use db::connection::establish_connection;
+use operations::{delete_table, sync_items};
 fn main() {
-
     dotenv().ok();
 
     // Database initialisation
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL doit être défini");
-    let manager = ConnectionManager::<PgConnection>::new(database_url);
-    let pool = Pool::builder()
-        .build(manager)
-        .expect("Erreur lors de la création du pool de connexions");
-
+    let pool = establish_connection(&database_url);
     let mut conn = pool.get().expect("Impossible d'obtenir une connexion");
 
-    // Cli 
+    // Cli
     let args = CliArgs::from_matches(build_cli().get_matches());
     match args.mode.as_str() {
         "delete" => match delete_table(&mut conn) {
@@ -45,7 +38,7 @@ fn main() {
                         Err(e) => eprintln!("Erreur lors de l'appel API : {:?}", e),
                     }
                 });
-        },
+        }
         _ => {
             eprintln!("Mode inconnu : {}", args.mode);
             std::process::exit(1);

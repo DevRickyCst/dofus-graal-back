@@ -2,14 +2,25 @@
 use crate::models::statics::item_meta::insertable::NewItemCategory;
 
 pub const ITEM_CATEGORIES: &[NewItemCategory] = &[
-    NewItemCategory { id: 1, name: "consumables" },
-    NewItemCategory { id: 2, name: "cosmetics" },
-    NewItemCategory { id: 3, name: "equipment" },
-    NewItemCategory { id: 4, name: "quest" },
+    NewItemCategory {
+        id: 1,
+        name: "consumables",
+    },
+    NewItemCategory {
+        id: 2,
+        name: "cosmetics",
+    },
+    NewItemCategory {
+        id: 3,
+        name: "equipment",
+    },
+    NewItemCategory {
+        id: 4,
+        name: "quest",
+    },
 ];
 
 pub const SERVERS: &[(&str, &str)] = &[
-
     ("brial 1", "pionnier"),
     ("brial 2", "pionnier"),
     ("kourial 1", "pionnier"),
@@ -20,7 +31,6 @@ pub const SERVERS: &[(&str, &str)] = &[
     ("rafal 2", "pionnier"),
     ("salar 1", "pionnier"),
     ("salar 2", "pionnier"),
-    
     ("dakal 1", "pionnier monocompte"),
     ("dakal 2", "pionnier monocompte"),
     ("dakal 3", "pionnier monocompte"),
@@ -33,16 +43,12 @@ pub const SERVERS: &[(&str, &str)] = &[
     ("dakal 10", "pionnier monocompte"),
     ("dakal 11", "pionnier monocompte"),
     ("dakal 12", "pionnier monocompte"),
-
-
     ("tal kasha", "classique"),
     ("orukam", "classique"),
     ("imagiro", "classique"),
     ("hell mina", "classique"),
     ("tilezia", "classique"),
-
     ("draconiros", "classique monocompte"),
-
     ("ombre", "epique"),
 ];
 

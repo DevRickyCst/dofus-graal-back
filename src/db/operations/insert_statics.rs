@@ -10,7 +10,7 @@ use crate::constant::{SERVERS, DOFUS_CLASSES}; // Import de la constante SERVERS
 pub fn insert_statics(conn: &mut PgConnection) -> Result<(), Error> {
     let _ = insert_servers(conn);
     let _ = insert_class(conn);
-    Ok(())                 
+    Ok(())
 }
 
 
@@ -34,7 +34,7 @@ pub fn insert_servers(conn: &mut PgConnection) -> Result<(), Error> {
 
         let rows_inserted = diesel::insert_into(servers)
         .values(&new_server)
-        .on_conflict_do_nothing() 
+        .on_conflict_do_nothing()
         .execute(conn)?;
 
         println!("Nombre de lignes insérées : {}", rows_inserted);

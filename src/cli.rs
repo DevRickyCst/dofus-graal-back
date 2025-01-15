@@ -18,8 +18,5 @@ impl CliArgs {
 pub fn build_cli() -> Command {
     Command::new("Database CLI")
         .about("Permet de gérer les tables de la base de données")
-        .arg(
-            arg!(<mode> "Mode d'opération : delete ou update")
-                .value_parser(["delete", "sync"]),
-        )
+        .arg(arg!(<mode> "Mode d'opération : delete ou update").value_parser(["delete", "sync"]))
 }
