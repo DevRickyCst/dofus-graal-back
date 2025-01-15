@@ -1,21 +1,17 @@
 // Relative path: src/operations.rs
 
-use diesel::prelude::*;
-use diesel::dsl::delete;
-use diesel::PgConnection;
-use crate::db_operations::{
-    insert_item::save_item,
-    handler_item_meta::save_categories,
-};
 use crate::api::client::*;
+use crate::db::operations::{handler::save_categories, item::save_item};
+use diesel::dsl::delete;
+use diesel::prelude::*;
+use diesel::PgConnection;
 use reqwest::Error;
 
 pub async fn sync_items(conn: &mut PgConnection) -> Result<(), Error> {
-
     // Insérer les catégories en base une fois
     match save_categories(conn) {
         Ok(_) => println!("Les catégories ont été insérées avec succès."),
-        Err(e) => eprintln!("Erreur lors de l'insertion des catégories : {:?}", e), 
+        Err(e) => eprintln!("Erreur lors de l'insertion des catégories : {:?}", e),
     };
 
     for category in crate::constant::ITEM_CATEGORIES {
@@ -27,11 +23,11 @@ pub async fn sync_items(conn: &mut PgConnection) -> Result<(), Error> {
 
         let list_id = fetch_items_category_id(category_name).await?;
 
-        for id in list_id{
+        for id in list_id {
             let item = fetch_single_item(id, category_name).await?;
-            match save_item(conn, item, category_id){
+            match save_item(conn, item, category_id) {
                 Ok(_) => imported_count += 1,
-                Err(_) => failed_count += 1, 
+                Err(_) => failed_count += 1,
             }
         }
         println!(
@@ -42,7 +38,6 @@ pub async fn sync_items(conn: &mut PgConnection) -> Result<(), Error> {
 
     Ok(())
 }
-
 
 pub fn delete_table(conn: &mut PgConnection) -> Result<usize, diesel::result::Error> {
     println!("Suppression des données dans toutes les tables");
@@ -64,4 +59,3 @@ pub fn delete_table(conn: &mut PgConnection) -> Result<usize, diesel::result::Er
 
     Ok(total_deleted)
 }
-

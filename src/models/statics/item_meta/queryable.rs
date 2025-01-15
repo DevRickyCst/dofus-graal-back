@@ -1,10 +1,9 @@
 // Relative path: src/models/statics/item_meta/queryable.rs
-use diesel::prelude::*;
 use crate::schema::*;
+use diesel::prelude::*;
 use diesel::Identifiable;
 
-
-#[derive(Queryable, Identifiable, serde::Deserialize)]
+#[derive(Queryable, Identifiable, serde::Deserialize, Debug)]
 #[diesel(table_name = image_urls)]
 pub struct ImageUrls {
     pub id: i32,
@@ -14,24 +13,21 @@ pub struct ImageUrls {
     pub hd: Option<String>,
 }
 
-
-#[derive(Queryable, Identifiable, serde::Deserialize)]
+#[derive(Queryable, Identifiable, serde::Deserialize, Debug)]
 #[diesel(table_name = item_categories)]
 pub struct ItemCategory {
     pub id: i32,
     pub name: String,
 }
 
-
-#[derive(Queryable, Identifiable, serde::Deserialize)]
+#[derive(Queryable, Identifiable, serde::Deserialize, Debug)]
 #[diesel(table_name = item_types)]
 pub struct ItemType {
     pub id: i32,
     pub name: String,
 }
 
-
-#[derive(Queryable, Identifiable, serde::Deserialize)]
+#[derive(Queryable, Identifiable, serde::Deserialize, Debug)]
 #[diesel(table_name = ranges)]
 pub struct Range {
     pub id: i32,
@@ -39,8 +35,7 @@ pub struct Range {
     pub max: i32,
 }
 
-
-#[derive(Queryable, Identifiable, serde::Deserialize)]
+#[derive(Queryable, Identifiable, serde::Deserialize, Debug)]
 #[diesel(table_name = effect_singles)]
 pub struct Effect {
     pub id: i32,
@@ -52,8 +47,7 @@ pub struct Effect {
     pub formatted: String,
 }
 
-
-#[derive(Queryable, Identifiable, Insertable)]
+#[derive(Queryable, Identifiable, Insertable, Debug)]
 #[diesel(table_name = item_effects)]
 #[diesel(primary_key(ankama_id, effect_id))]
 pub struct ItemEffect {
@@ -61,8 +55,7 @@ pub struct ItemEffect {
     pub effect_id: i32,
 }
 
-
-#[derive(Queryable, Identifiable, serde::Deserialize)]
+#[derive(Queryable, Identifiable, serde::Deserialize, Debug)]
 #[diesel(table_name = recipe_singles)]
 pub struct Recipe {
     pub id: i32,
@@ -71,8 +64,7 @@ pub struct Recipe {
     pub quantity: i32,
 }
 
-
-#[derive(Queryable, Identifiable, Insertable)]
+#[derive(Queryable, Identifiable, Insertable, Debug)]
 #[diesel(table_name = item_recipes)]
 #[diesel(primary_key(ankama_id, recipe_id))]
 pub struct ItemRecipe {

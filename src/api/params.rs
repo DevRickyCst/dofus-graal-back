@@ -9,8 +9,10 @@ pub struct ApiParams<'a> {
 
 impl<'a> ApiParams<'a> {
     pub fn to_extra_url(&self) -> String {
-        let params = [format!("page[size]={}", self.page_size),
-            format!("page[number]={}", self.page_number)];
+        let params = [
+            format!("page[size]={}", self.page_size),
+            format!("page[number]={}", self.page_number),
+        ];
 
         // If mounts, dont add item/
         if self.item_category == "Mounts" {

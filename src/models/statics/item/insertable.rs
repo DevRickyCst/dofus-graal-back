@@ -2,7 +2,6 @@
 use crate::schema::*;
 use diesel::Insertable;
 
-
 #[derive(Insertable)]
 #[diesel(table_name = items)]
 pub struct NewItem<'a> {
