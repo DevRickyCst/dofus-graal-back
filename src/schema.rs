@@ -177,6 +177,8 @@ diesel::joinable!(item_effects -> items (ankama_id));
 diesel::joinable!(item_recipes -> items (ankama_id));
 diesel::joinable!(item_recipes -> recipe_singles (recipe_id));
 diesel::joinable!(items -> image_urls (image_urls_id));
+diesel::joinable!(items -> item_categories (category_id));
+diesel::joinable!(items -> item_types (type_id));
 diesel::joinable!(items -> ranges (range_id));
 diesel::joinable!(sets -> caracteristiques (caracteristique_id));
 diesel::joinable!(sets -> characters (character_id));

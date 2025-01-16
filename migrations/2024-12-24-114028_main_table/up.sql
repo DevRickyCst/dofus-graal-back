@@ -16,8 +16,8 @@ CREATE TABLE items (
     critical_hit_probability INTEGER,
     critical_hit_bonus INTEGER,
     range_id INTEGER,
-    --FOREIGN KEY (category_id) REFERENCES item_categories(id) ON DELETE CASCADE,
-    -- FOREIGN KEY (type_id) REFERENCES item_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES item_categories(id) ON DELETE CASCADE,
+    FOREIGN KEY (type_id) REFERENCES item_types(id) ON DELETE CASCADE,
     FOREIGN KEY (range_id) REFERENCES ranges(id) ON DELETE CASCADE,
     FOREIGN KEY (image_urls_id) REFERENCES image_urls(id) ON DELETE CASCADE
 );

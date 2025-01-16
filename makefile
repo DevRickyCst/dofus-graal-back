@@ -3,7 +3,6 @@ TEST_DB_URL=$(shell cat .env.test | grep TEST_DATABASE_URL | cut -d '=' -f2 | tr
 
 deploy-local:
 	docker compose up -d
-	diesel migration run
 
 migrations:
 	diesel migration run
