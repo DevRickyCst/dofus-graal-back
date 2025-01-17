@@ -17,9 +17,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: test
-      POSTGRES_DB: test_db
+      POSTGRES_DB: postgres
     ports:
-      - "5433:5433" # Port local différent pour éviter les conflits avec la DB principale
+      - "5433:5433"
     volumes:
       - postgres_test_data:/var/lib/postgresql/data
 

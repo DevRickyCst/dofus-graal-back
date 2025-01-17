@@ -35,7 +35,7 @@ mod insert_and_retrieve_record_test {
     use crate::models::statics::item_meta::queryable::{
         Effect, ImageUrls, ItemType, Range, Recipe,
     };
-    use crate::operations::delete_table;
+    use crate::scripts::delete_items::*;
     use crate::test_utils::{get_test_db_connection, setup_test_environment};
 
     #[test]
@@ -45,7 +45,7 @@ mod insert_and_retrieve_record_test {
         setup_test_environment();
         let mut conn = get_test_db_connection();
 
-        let _ = delete_table(&mut conn);
+        let _ = delete_items(&mut conn);
 
         let new_record = NewItemType {
             id: 5,
@@ -64,7 +64,7 @@ mod insert_and_retrieve_record_test {
 
         setup_test_environment();
         let mut conn = get_test_db_connection();
-        let _ = delete_table(&mut conn);
+        let _ = delete_items(&mut conn);
 
         let new_image_urls = NewImageUrls {
             icon: "testing".to_string(),
@@ -88,7 +88,7 @@ mod insert_and_retrieve_record_test {
 
         setup_test_environment();
         let mut conn = get_test_db_connection();
-        let _ = delete_table(&mut conn);
+        let _ = delete_items(&mut conn);
 
         let new_range = NewRange { min: 0, max: 5 };
         let record: Range = insert_and_retrieve_record(new_range, ranges, &mut conn)
@@ -104,7 +104,7 @@ mod insert_and_retrieve_record_test {
 
         setup_test_environment();
         let mut conn = get_test_db_connection();
-        let _ = delete_table(&mut conn);
+        let _ = delete_items(&mut conn);
 
         let new_recipe = NewRecipe {
             item_ankama_id: 1,
@@ -126,7 +126,7 @@ mod insert_and_retrieve_record_test {
 
         setup_test_environment();
         let mut conn = get_test_db_connection();
-        let _ = delete_table(&mut conn);
+        let _ = delete_items(&mut conn);
 
         let new_effect = NewEffect {
             int_minimum: 5,

@@ -1,22 +1,24 @@
-// Relative path: src/cli.rs
-use clap::{arg, Command};
+use clap::{Parser, Subcommand};
 
-/// Arguments CLI
+#[derive(Parser, Debug)]
+#[command(name = "Database CLI")]
+#[command(about = "Permet de gérer les opérations de la base de données.", version = "1.0")]
 pub struct CliArgs {
-    pub mode: String,
+    #[command(subcommand)]
+    pub command: Commands,
 }
 
-impl CliArgs {
-    /// Convertit les arguments parsés en une structure `CliArgs`
-    pub fn from_matches(matches: clap::ArgMatches) -> Self {
-        let mode = matches.get_one::<String>("mode").unwrap().clone();
-        CliArgs { mode }
-    }
+#[derive(Subcommand, Debug)]
+pub enum Commands {
+    Serve,
+    Cli {
+        #[arg(value_enum)]
+        action: CliAction,
+    },
 }
 
-/// Définit la configuration du CLI
-pub fn build_cli() -> Command {
-    Command::new("Database CLI")
-        .about("Permet de gérer les tables de la base de données")
-        .arg(arg!(<mode> "Mode d'opération : delete ou update").value_parser(["delete", "sync"]))
+#[derive(clap::ValueEnum, Clone, Debug)]
+pub enum CliAction {
+    Sync,
+    Delete,
 }

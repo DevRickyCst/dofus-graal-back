@@ -2,8 +2,6 @@
 
 use crate::api::client::*;
 use crate::db::operations::{handler::save_categories, item::save_item};
-use diesel::dsl::delete;
-use diesel::prelude::*;
 use diesel::PgConnection;
 use reqwest::Error;
 
@@ -37,25 +35,4 @@ pub async fn sync_items(conn: &mut PgConnection) -> Result<(), Error> {
     }
 
     Ok(())
-}
-
-pub fn delete_table(conn: &mut PgConnection) -> Result<usize, diesel::result::Error> {
-    println!("Suppression des données dans toutes les tables");
-
-    let mut total_deleted = 0;
-
-    // Liste des suppressions
-    total_deleted += delete(crate::schema::item_types::table).execute(conn)?;
-    total_deleted += delete(crate::schema::characters::table).execute(conn)?;
-    total_deleted += delete(crate::schema::effect_singles::table).execute(conn)?;
-    total_deleted += delete(crate::schema::recipe_singles::table).execute(conn)?;
-    total_deleted += delete(crate::schema::servers::table).execute(conn)?;
-    total_deleted += delete(crate::schema::ranges::table).execute(conn)?;
-    total_deleted += delete(crate::schema::items::table).execute(conn)?;
-    total_deleted += delete(crate::schema::image_urls::table).execute(conn)?;
-    total_deleted += delete(crate::schema::item_effects::table).execute(conn)?;
-
-    println!("Total des lignes supprimées : {}", total_deleted);
-
-    Ok(total_deleted)
 }
