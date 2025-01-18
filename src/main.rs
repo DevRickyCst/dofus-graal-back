@@ -5,16 +5,17 @@ pub mod constant;
 pub mod db;
 pub mod models;
 mod schema;
+mod server;
 pub mod test_utils;
 use dotenv::dotenv;
 mod scripts;
+use tokio::runtime::Runtime;
 
 use cli::{CliArgs, CliAction, Commands};
 use db::connection::establish_connection;
 use scripts::{delete_items::*, sync_items::*};
 use clap::Parser;
-
-
+use server::start_server;
 
 fn main() {
     dotenv().ok();
@@ -29,7 +30,11 @@ fn main() {
 
     match args.command {
         Commands::Serve => {
-            println!("Lancement du serveur...");
+            tokio::runtime::Runtime::new()
+            .expect("Impossible de créer le runtime tokio")
+            .block_on(async {
+                start_server().await;
+            })
         }
         Commands::Cli { action } => match action {
             CliAction::Sync => {

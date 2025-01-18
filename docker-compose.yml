@@ -2,26 +2,39 @@ version: '3.8'
 services:
   postgres:
     image: postgres:17
-    container_name: dofus_db
+    container_name: db-local
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: test
+      POSTGRES_PASSWORD: prod78700
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - "5432:5432" # Port pour la base de production
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./config/postgresql:/etc/postgresql/conf.d # Optionnel : pour customiser les fichiers de conf
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
   postgres_test:
     image: postgres:17
-    container_name: dofus_test_db
+    container_name: db-test
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: test
+      POSTGRES_PASSWORD: test78700
       POSTGRES_DB: postgres
     ports:
-      - "5433:5433"
+      - "5433:5432" # Port pour la base de test
     volumes:
       - postgres_test_data:/var/lib/postgresql/data
+      - ./config/postgresql:/etc/postgresql/conf.d # Optionnel : pour customiser les fichiers de conf
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   postgres_data:
