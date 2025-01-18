@@ -21,12 +21,15 @@ pub fn save_item(
 
     let _type_id: i32 = handle_item_type(conn, &item.item_type)?;
 
-    let range: Option<Range> = if let Some(range_data) = item.range.as_ref() {
-        Some(insert_and_retrieve_record(
+    let _range_id: Option<i32> = if let Some(range_data) = item.range.as_ref() {
+        
+        let _range : Range = insert_and_retrieve_record(
             range_data,
             ranges_table::ranges,
             conn,
-        )?)
+        )?;
+
+        Some(_range.id)
     } else {
         None
     };
@@ -48,7 +51,7 @@ pub fn save_item(
         is_two_handed: item.is_two_handed,
         critical_hit_probability: item.critical_hit_probability,
         critical_hit_bonus: item.critical_hit_bonus,
-        range_id: Some(range.unwrap().id),
+        range_id: _range_id,
     };
 
     // Insérer l'item dans la base de données
