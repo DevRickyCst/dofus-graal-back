@@ -2,7 +2,10 @@ use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
 #[command(name = "Database CLI")]
-#[command(about = "Permet de gérer les opérations de la base de données.", version = "1.0")]
+#[command(
+    about = "Permet de gérer les opérations de la base de données.",
+    version = "1.0"
+)]
 pub struct CliArgs {
     #[command(subcommand)]
     pub command: Commands,

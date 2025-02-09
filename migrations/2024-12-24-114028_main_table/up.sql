@@ -78,3 +78,29 @@ CREATE TABLE sets (
     FOREIGN KEY (caracteristique_id) REFERENCES caracteristiques(id) ON DELETE CASCADE,
     FOREIGN KEY (stuff_id) REFERENCES stuffs(id) ON DELETE CASCADE
 );
+
+
+-- Création de la table recipe_singles
+CREATE TABLE recipes (
+    id SERIAL PRIMARY KEY,
+    item_id INTEGER NOT NULL,
+    item_ankama_id INTEGER NOT NULL,
+    item_subtype VARCHAR(200) NOT NULL,
+    quantity INTEGER DEFAULT 1 NOT NULL,
+    FOREIGN KEY (item_id) REFERENCES items(ankama_id) ON DELETE CASCADE
+);
+
+
+-- Création de la table effect_singles
+CREATE TABLE effects (
+    id SERIAL PRIMARY KEY,
+    item_id INTEGER NOT NULL,
+    int_minimum INTEGER DEFAULT 0 NOT NULL,
+    int_maximum INTEGER DEFAULT 0 NOT NULL,
+    element_id INTEGER,
+    ignore_int_min BOOLEAN DEFAULT FALSE NOT NULL,
+    ignore_int_max BOOLEAN DEFAULT FALSE NOT NULL,
+    formatted VARCHAR(200) NOT NULL,
+    FOREIGN KEY (item_id) REFERENCES items(ankama_id) ON DELETE CASCADE
+    --FOREIGN KEY (element_id) REFERENCES elements(id) ON DELETE CASCADE
+);

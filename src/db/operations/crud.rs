@@ -19,15 +19,6 @@ where
         .get_result::<Model>(connection)
 }
 
-
-
-
-
-
-
-
-
-
 #[cfg(test)]
 mod insert_and_retrieve_record_test {
     use super::*;
@@ -100,19 +91,20 @@ mod insert_and_retrieve_record_test {
 
     #[test]
     fn test_recipe() {
-        use crate::schema::recipe_singles::dsl::*;
+        use crate::schema::recipes::dsl::*;
 
         setup_test_environment();
         let mut conn = get_test_db_connection();
         let _ = delete_items(&mut conn);
 
         let new_recipe = NewRecipe {
+            item_id: None,
             item_ankama_id: 1,
             item_subtype: "Ingredient".to_string(),
             quantity: 10,
         };
 
-        let record: Recipe = insert_and_retrieve_record(new_recipe, recipe_singles, &mut conn)
+        let record: Recipe = insert_and_retrieve_record(new_recipe, recipes, &mut conn)
             .expect("Erreur lors de l'insertion des recettes");
 
         assert_eq!(record.item_ankama_id, 1);
@@ -122,13 +114,14 @@ mod insert_and_retrieve_record_test {
 
     #[test]
     fn test_effect() {
-        use crate::schema::effect_singles::dsl::*;
+        use crate::schema::effects::dsl::*;
 
         setup_test_environment();
         let mut conn = get_test_db_connection();
         let _ = delete_items(&mut conn);
 
         let new_effect = NewEffect {
+            item_id: None,
             int_minimum: 5,
             int_maximum: 10,
             element_id: Some(1),
@@ -137,7 +130,7 @@ mod insert_and_retrieve_record_test {
             formatted: "Test Effect".to_string(),
         };
 
-        let record: Effect = insert_and_retrieve_record(new_effect, effect_singles, &mut conn)
+        let record: Effect = insert_and_retrieve_record(new_effect, effects, &mut conn)
             .expect("Erreur lors de l'insertion des effets");
 
         assert_eq!(record.int_minimum, 5);

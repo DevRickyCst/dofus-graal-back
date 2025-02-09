@@ -12,17 +12,17 @@ pub async fn sync_items(conn: &mut PgConnection) -> Result<(), Error> {
         Err(e) => eprintln!("Erreur lors de l'insertion des catégories : {:?}", e),
     };
 
-    for category in crate::constant::ITEM_CATEGORIES {
+    for category in crate::constant::get_item_categories() {
         let category_id = category.id;
-        let category_name = category.name;
+        let category_name = &category.name;
 
         let mut imported_count = 0;
         let mut failed_count = 0;
 
-        let list_id = fetch_items_category_id(category_name).await?;
+        let list_id = fetch_items_category_id(&category_name).await?;
 
         for id in list_id {
-            let item = fetch_single_item(id, category_name).await?;
+            let item = fetch_single_item(id, &category_name).await?;
             match save_item(conn, item, category_id) {
                 Ok(_) => imported_count += 1,
                 Err(_) => failed_count += 1,

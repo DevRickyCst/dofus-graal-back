@@ -22,12 +22,7 @@ pub fn save_item(
     let _type_id: i32 = handle_item_type(conn, &item.item_type)?;
 
     let _range_id: Option<i32> = if let Some(range_data) = item.range.as_ref() {
-        
-        let _range : Range = insert_and_retrieve_record(
-            range_data,
-            ranges_table::ranges,
-            conn,
-        )?;
+        let _range: Range = insert_and_retrieve_record(range_data, ranges_table::ranges, conn)?;
 
         Some(_range.id)
     } else {
@@ -57,12 +52,9 @@ pub fn save_item(
     // Insérer l'item dans la base de données
     let new_item: Item = insert_and_retrieve_record(_new_item, items, conn)?;
 
-    // Gestion des Effets
-    let effect_ids: Option<Vec<i32>> = handle_effects(conn, item.effects)?;
-    handle_item_effects(conn, new_item.ankama_id, effect_ids)?;
+    handle_effects(conn, new_item.ankama_id, item.effects)?;
 
-    let recipe_ids: Option<Vec<i32>> = handle_recipes(conn, item.recipe)?;
-    handle_item_recipes(conn, new_item.ankama_id, recipe_ids)?;
+    handle_recipes(conn, new_item.ankama_id, item.recipes)?;
 
     Ok(())
 }

@@ -2,8 +2,9 @@
 use crate::schema::*;
 use diesel::prelude::*;
 use diesel::Identifiable;
+use serde::Serialize;
 
-#[derive(Queryable, Identifiable)]
+#[derive(Queryable, Identifiable, Debug, Selectable, Serialize)]
 #[diesel(primary_key(ankama_id))]
 #[diesel(table_name = items)]
 pub struct Item {

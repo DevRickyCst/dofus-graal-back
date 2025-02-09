@@ -1,24 +1,28 @@
+use std::string;
+
 // Relative path: src/constant.rs
 use crate::models::statics::item_meta::insertable::NewItemCategory;
 
-pub const ITEM_CATEGORIES: &[NewItemCategory] = &[
-    NewItemCategory {
-        id: 1,
-        name: "consumables",
-    },
-    NewItemCategory {
-        id: 2,
-        name: "cosmetics",
-    },
-    NewItemCategory {
-        id: 3,
-        name: "equipment",
-    },
-    NewItemCategory {
-        id: 4,
-        name: "quest",
-    },
-];
+pub fn get_item_categories() -> Vec<NewItemCategory> {
+    vec![
+        NewItemCategory {
+            id: 1,
+            name: "consumables".to_string(),
+        },
+        NewItemCategory {
+            id: 2,
+            name: "cosmetics".to_string(),
+        },
+        NewItemCategory {
+            id: 3,
+            name: "equipment".to_string(),
+        },
+        NewItemCategory {
+            id: 4,
+            name: "quest".to_string(),
+        },
+    ]
+}
 
 pub const SERVERS: &[(&str, &str)] = &[
     ("brial 1", "pionnier"),

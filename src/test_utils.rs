@@ -1,6 +1,6 @@
+use crate::db::connection::establish_connection;
 use diesel::pg::PgConnection;
 use diesel::r2d2::{ConnectionManager, PooledConnection};
-use crate::db::connection::establish_connection;
 use std::env;
 
 /// Retourne une connexion à la base de données pour les tests

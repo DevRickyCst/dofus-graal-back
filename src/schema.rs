@@ -33,8 +33,9 @@ diesel::table! {
 }
 
 diesel::table! {
-    effect_singles (id) {
+    effects (id) {
         id -> Int4,
+        item_id -> Int4,
         int_minimum -> Int4,
         int_maximum -> Int4,
         element_id -> Nullable<Int4>,
@@ -72,20 +73,6 @@ diesel::table! {
         id -> Int4,
         #[max_length = 200]
         name -> Varchar,
-    }
-}
-
-diesel::table! {
-    item_effects (ankama_id, effect_id) {
-        ankama_id -> Int4,
-        effect_id -> Int4,
-    }
-}
-
-diesel::table! {
-    item_recipes (ankama_id, recipe_id) {
-        ankama_id -> Int4,
-        recipe_id -> Int4,
     }
 }
 
@@ -128,8 +115,9 @@ diesel::table! {
 }
 
 diesel::table! {
-    recipe_singles (id) {
+    recipes (id) {
         id -> Int4,
+        item_id -> Int4,
         item_ankama_id -> Int4,
         #[max_length = 200]
         item_subtype -> Varchar,
@@ -172,14 +160,12 @@ diesel::table! {
 
 diesel::joinable!(characters -> dofus_classes (dofus_classes_id));
 diesel::joinable!(characters -> servers (server_id));
-diesel::joinable!(item_effects -> effect_singles (effect_id));
-diesel::joinable!(item_effects -> items (ankama_id));
-diesel::joinable!(item_recipes -> items (ankama_id));
-diesel::joinable!(item_recipes -> recipe_singles (recipe_id));
+diesel::joinable!(effects -> items (item_id));
 diesel::joinable!(items -> image_urls (image_urls_id));
 diesel::joinable!(items -> item_categories (category_id));
 diesel::joinable!(items -> item_types (type_id));
 diesel::joinable!(items -> ranges (range_id));
+diesel::joinable!(recipes -> items (item_id));
 diesel::joinable!(sets -> caracteristiques (caracteristique_id));
 diesel::joinable!(sets -> characters (character_id));
 diesel::joinable!(sets -> stuffs (stuff_id));
@@ -188,16 +174,14 @@ diesel::allow_tables_to_appear_in_same_query!(
     caracteristiques,
     characters,
     dofus_classes,
-    effect_singles,
+    effects,
     elements,
     image_urls,
     item_categories,
-    item_effects,
-    item_recipes,
     item_types,
     items,
     ranges,
-    recipe_singles,
+    recipes,
     servers,
     sets,
     stuffs,
