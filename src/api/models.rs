@@ -1,14 +1,13 @@
 // Relative path: src/api/models.rs
 use crate::models::statics::item_meta::insertable::*;
-use serde::Deserialize;
 
-#[derive(Deserialize)]
+#[derive(serde::Deserialize)]
 pub struct ApiResponse {
     pub _links: Links,
     pub items: Vec<DFDItem>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, serde::Deserialize)]
 pub struct Links {
     //pub first: String,
     //pub prev: Option<String>,
@@ -26,7 +25,7 @@ impl Links {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(serde::Deserialize)]
 pub struct DFDItem {
     pub ankama_id: i32,
     //pub effects: Option<Vec<DFDEffect>>,
@@ -38,13 +37,14 @@ pub struct DFDItem {
     //pub item_type: Option<DFDItemType>
 }
 
-#[derive(Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct DFDDetailedItem {
     pub ankama_id: i32,
     pub name: String,
     pub description: String,
     #[serde(rename = "type")]
     pub item_type: NewItemType,
+    pub item_category: Option<NewItemCategory>,
     pub is_weapon: Option<bool>,
     pub is_two_handed: Option<bool>,
     pub level: i32,
@@ -56,5 +56,5 @@ pub struct DFDDetailedItem {
     pub max_cast_per_turn: Option<i32>,
     pub ap_cost: Option<i32>,
     pub range: Option<NewRange>,
-    pub recipe: Option<Vec<NewRecipe>>,
+    pub recipes: Option<Vec<NewRecipe>>,
 }

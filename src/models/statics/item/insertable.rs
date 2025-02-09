@@ -2,7 +2,7 @@
 use crate::schema::*;
 use diesel::Insertable;
 
-#[derive(Insertable)]
+#[derive(Insertable, Debug)]
 #[diesel(table_name = items)]
 pub struct NewItem<'a> {
     pub ankama_id: i32,

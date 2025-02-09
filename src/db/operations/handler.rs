@@ -8,7 +8,7 @@ pub fn save_categories(conn: &mut PgConnection) -> Result<(), Error> {
     use crate::schema::item_categories::dsl::*;
     use diesel::prelude::*;
 
-    for category in crate::constant::ITEM_CATEGORIES {
+    for category in crate::constant::get_item_categories() {
         diesel::insert_into(item_categories)
             .values(category)
             .on_conflict_do_nothing()
@@ -41,76 +41,33 @@ pub fn handle_item_type(conn: &mut PgConnection, item_type: &NewItemType) -> Res
 
 pub fn handle_effects(
     conn: &mut PgConnection,
+    ankama_id: i32,
     effects: Option<Vec<NewEffect>>,
-) -> Result<Option<Vec<i32>>, Error> {
-    if let Some(effects) = effects {
-        let mut effect_ids = Vec::new();
-        for effect in effects {
-            use crate::schema::effect_singles::dsl::*;
-
-            let effect_record: Effect = insert_and_retrieve_record(effect, effect_singles, conn)?;
-            effect_ids.push(effect_record.id);
-        }
-        Ok(Some(effect_ids))
-    } else {
-        Ok(None)
-    }
-}
-
-pub fn handle_recipes(
-    conn: &mut PgConnection,
-    recipes: Option<Vec<NewRecipe>>,
-) -> Result<Option<Vec<i32>>, Error> {
-    if let Some(recipes) = recipes {
-        let mut recipe_ids = Vec::new();
-        for recipe in recipes {
-            use crate::schema::recipe_singles::dsl::*;
-
-            let recipe_record: Recipe = insert_and_retrieve_record(recipe, recipe_singles, conn)?;
-
-            recipe_ids.push(recipe_record.id);
-        }
-        Ok(Some(recipe_ids))
-    } else {
-        Ok(None)
-    }
-}
-
-pub fn handle_item_effects(
-    conn: &mut PgConnection,
-    _ankama_id: i32,
-    effect_ids: Option<Vec<i32>>,
 ) -> Result<(), Error> {
-    if let Some(_effect_ids) = effect_ids {
-        for _effect_id in _effect_ids {
-            use crate::schema::item_effects::dsl::*;
+    if let Some(mut effects) = effects {
+        for effect in &mut effects {
+            use crate::schema::effects::dsl::*;
+            effect.item_id = Some(ankama_id);
 
-            let new_item_effect = NewItemEffect {
-                ankama_id: _ankama_id,
-                effect_id: _effect_id,
-            };
-
-            let _: ItemEffect = insert_and_retrieve_record(new_item_effect, item_effects, conn)?;
+            let _: Effect = insert_and_retrieve_record(effect.clone(), effects, conn)?;
         }
     }
     Ok(())
 }
 
-pub fn handle_item_recipes(
+pub fn handle_recipes(
     conn: &mut PgConnection,
-    _ankama_id: i32,
-    recipe_ids: Option<Vec<i32>>,
+    ankama_id: i32,
+    recipes: Option<Vec<NewRecipe>>,
 ) -> Result<(), Error> {
-    if let Some(_recipe_ids) = recipe_ids {
-        for _recipe_id in _recipe_ids {
-            use crate::schema::item_recipes::dsl::*;
+    if let Some(mut recipes) = recipes {
+        for recipe in &mut recipes {
+            use crate::schema::recipes::dsl::*;
 
-            let new_item_recipe = NewItemRecipe {
-                ankama_id: _ankama_id,
-                recipe_id: _recipe_id,
-            };
+            recipe.item_id = Some(ankama_id);
 
-            let _: ItemRecipe = insert_and_retrieve_record(new_item_recipe, item_recipes, conn)?;
+            // Insérer chaque recette dans la base de données
+            let _: Recipe = insert_and_retrieve_record(recipe.clone(), recipes, conn)?;
         }
     }
     Ok(())
