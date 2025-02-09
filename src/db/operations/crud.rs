@@ -28,12 +28,30 @@ mod insert_and_retrieve_record_test {
     };
     use crate::models::statics::item_meta::insertable::*;
     use crate::models::statics::item_meta::queryable::{
-        Effect, ImageUrls, ItemType, Range, Recipe,
+        Effect, ImageUrls, ItemType, Range, Recipe, ItemCategory
     };
-    use crate::scripts::delete_items::*;
+    use crate::scripts::delete_items::delete_items;
     use crate::test_utils::{get_test_db_connection, setup_test_environment};
 
 
+    #[test]
+    fn item_category() {
+        use crate::schema::item_categories::dsl::*;
+
+        setup_test_environment();
+        let mut conn = get_test_db_connection();
+        let _ = delete_items(&mut conn);
+
+        let new_record = NewItemCategory {
+            id: 5,
+            name: "Test Category".to_string(),
+        };
+        let record: ItemCategory = insert_and_retrieve_record(new_record, item_categories, &mut conn)
+            .expect("Erreur lors de l'insertion des catégories d'éléments");
+        println!("{:#?}", record);
+        assert_eq!(record.id, 5);
+        assert_eq!(record.name, "Test Category");
+    }   
 
     #[test]
     fn item_type() {
