@@ -43,7 +43,7 @@ mod insert_and_retrieve_record_test {
         let _ = delete_items(&mut conn);
 
         let new_record = NewItemCategory {
-            id: 5,
+            id: 1,
             name: "Test Category".to_string(),
         };
         let record: ItemCategory = insert_and_retrieve_record(new_record, item_categories, &mut conn)
